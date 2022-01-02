@@ -3,6 +3,7 @@
 
 # Extra
 Makefile
+snake
 
 # Compiled Object files
 *.slo
