@@ -1,6 +1,7 @@
 #include <iostream>
 #include <time.h>
 #include <SFML/Graphics.hpp>
+#include <SFML/Audio.hpp>
 
 const int blockWidth = 30;
 const int blockHeight = 30;
@@ -17,16 +18,30 @@ private:
     std::vector<sf::Vector2f> bodyArray{sf::Vector2f{330, 240}};
     std::vector<sf::Vector2f> bodyArrayTemp{sf::Vector2f{330, 240}};
     sf::Vector2f movement{0, 0};
-    std::vector <sf::Vector2f> movements {{0, 0}};
+    std::vector<sf::Vector2f> movements{{0, 0}};
+
+    sf::Sound moveSound;
+    sf::SoundBuffer moveSoundBuffer;
 
 public:
-    Snake(){};
+    Snake()
+    {
+        if (!moveSoundBuffer.loadFromFile("assets/music/move.wav"))
+        {
+            std::cout << sf::err;
+        }
+        else
+        {
+            moveSound.setBuffer(moveSoundBuffer);
+        }
+    };
+
     void eat()
     {
         auto bodyLast = bodyArray[bodyArray.size() - 1];
         auto movementLast = movements[movements.size() - 1];
         bodyLast += sf::Vector2f((movementLast.x / 5) * blockWidth * -1,
-                                (movementLast.y / 5 ) * blockHeight * -1);
+                                 (movementLast.y / 5) * blockHeight * -1);
         bodyArray.push_back(bodyLast);
         movements.push_back(movementLast);
         bodyArrayTemp = bodyArray;
@@ -34,13 +49,16 @@ public:
 
     void move()
     {
-        for (size_t i {0}; i < bodyArray.size(); i++) {
+        for (size_t i{0}; i < bodyArray.size(); i++)
+        {
             bodyArray[i] += movements[i];
         }
     }
 
     void setMovement(sf::Vector2f newMovement)
     {
+        if (newMovement != movements[0])
+            moveSound.play();
         movements.insert(movements.begin(), newMovement);
         movements.pop_back();
     }
