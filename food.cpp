@@ -2,17 +2,17 @@
 
 Food::Food()
 {
-    sf::Texture bodyTexture;
-    if (!bodyTexture.loadFromFile("./assets/images/apple.png"))
+    sf::Texture* bodyTexture = new sf::Texture();
+    if (!bodyTexture->loadFromFile("./assets/images/apple.png"))
     {
         std::cout << sf::err;
     }
     else
     {
-        bodyTexture.setSmooth(true);
-        body.setTexture(bodyTexture);
-        body.scale(((double)blockWidth / bodyTexture.getSize().x) * 1.5,
-                   ((double)blockHeight / bodyTexture.getSize().y) * 1.5);
+        bodyTexture->setSmooth(true);
+        body.setTexture(*bodyTexture);
+        body.scale(((double)blockWidth / bodyTexture->getSize().x) * 1.5,
+                   ((double)blockHeight / bodyTexture->getSize().y) * 1.5);
     }
 };
 
