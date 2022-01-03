@@ -10,7 +10,6 @@ class Food
 {
 private:
     sf::Sprite body;
-    sf::Texture bodyTexture{};
     sf::Vector2f position{120, 120};
 
 public:

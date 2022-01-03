@@ -2,6 +2,7 @@
 
 Food::Food()
 {
+    sf::Texture bodyTexture;
     if (!bodyTexture.loadFromFile("./assets/images/apple.png"))
     {
         std::cout << sf::err;

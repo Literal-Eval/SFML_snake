@@ -26,7 +26,7 @@ int main()
 
     std::srand(time(nullptr));
 
-    Snake snake {};
+    Snake snake;
     Food food;
     food.move(true);
 

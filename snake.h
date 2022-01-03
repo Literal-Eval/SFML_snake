@@ -19,6 +19,9 @@ private:
     sf::Sound moveSound;
     sf::SoundBuffer moveSoundBuffer;
 
+    sf::Sprite head;
+    sf::Sprite tail;
+
 public:
     Snake();
 
