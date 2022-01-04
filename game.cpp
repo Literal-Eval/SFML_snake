@@ -35,7 +35,7 @@ void Game::updateScore() {
   ss << score;
   ss >> strScore;
   scoreText.setString(strScore);
-  
+
   ss.clear();
   ss << highScore;
   ss >> strHighScore;
@@ -45,25 +45,33 @@ void Game::updateScore() {
 void Game::init() {}
 
 void Game::drawBoard(sf::RenderWindow* window) {
-    for (int y{0}; y < (screenHeight + 120) / blockHeight; y++) {
-      for (int x{0}; x < (screenWidth + 60) / blockWidth; x++) {
-        if (y < 2) {
-          assets.borderDark.setPosition(x * blockWidth, y * blockHeight);
-          window->draw(assets.borderDark);
-        } else if (x == 0 || y == 2 ||
-                   x == ((screenWidth + 60) / blockWidth) - 1 ||
-                   y == (((screenHeight + 120) / blockHeight) - 1)) {
-          assets.borderLight.setPosition(x * blockWidth, y * blockHeight);
-          window->draw(assets.borderLight);
-        } else if ((x + y) & 1) {
-          assets.grassLight.setPosition(x * blockWidth, y * blockHeight);
-          window->draw(assets.grassLight);
-        } else {
-          assets.grassDark.setPosition(x * blockWidth, y * blockHeight);
-          window->draw(assets.grassDark);
-        }
+  for (int y{0}; y < (screenHeight + 120) / blockHeight; y++) {
+    for (int x{0}; x < (screenWidth + 60) / blockWidth; x++) {
+      if (y < 2) {
+        assets.borderDark.setPosition(x * blockWidth, y * blockHeight);
+        window->draw(assets.borderDark);
+      } else if (x == 0 || y == 2 ||
+                 x == ((screenWidth + 60) / blockWidth) - 1 ||
+                 y == (((screenHeight + 120) / blockHeight) - 1)) {
+        assets.borderLight.setPosition(x * blockWidth, y * blockHeight);
+        window->draw(assets.borderLight);
+      } else if ((x + y) & 1) {
+        assets.grassLight.setPosition(x * blockWidth, y * blockHeight);
+        window->draw(assets.grassLight);
+      } else {
+        assets.grassDark.setPosition(x * blockWidth, y * blockHeight);
+        window->draw(assets.grassDark);
       }
     }
+  }
+}
+
+void Game::drawSnake(sf::RenderWindow* window) {
+  auto snakeBody = snake.getSnakeBody();
+  for (size_t i{0}; i < snakeBody.size(); i++) {
+    snake.getBodySprite(i).setPosition(snakeBody[i]);
+    window->draw(snake.getBodySprite(i));
+  }
 }
 
 void Game::start() {
@@ -113,17 +121,11 @@ void Game::start() {
     }
 
     drawBoard(&window);
+    drawSnake(&window);
     window.draw(scoreSprite);
     window.draw(highScoreSprite);
     window.draw(scoreText);
     window.draw(highScoreText);
-
-    auto snakeBody = snake.getSnakeBody();
-    for (size_t i{0}; i < snakeBody.size(); i++) {
-      snake.getBodySprite(i).setPosition(snakeBody[i]);
-      window.draw(snake.getBodySprite(i));
-    }
-
     window.draw(food.getBody());
     window.display();
   }

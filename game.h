@@ -37,6 +37,7 @@ class Game {
   void updateScore();
 
   void drawBoard(sf::RenderWindow*);
+  void drawSnake(sf::RenderWindow*);
   // ~Game();
 };
 
