@@ -2,17 +2,41 @@
 #define _GAME_H_
 
 #include <SFML/Graphics.hpp>
+#include <sstream>
+
+#include "assets.h"
+#include "food.h"
+#include "snake.h"
 
 class Game {
  private:
-  /* data */
+  bool isRunning;
+  int score;
+  int highScore;
+
+  sf::Sprite scoreSprite;
+  sf::Sprite highScoreSprite;
+  sf::Texture highScoreSpriteTexture;
+
+  sf::Font gameFont;
+  sf::Text scoreText;
+  sf::Text highScoreText;
+
+  Snake snake;
+  Food food;
+
+  Assets assets;
+
  public:
   Game();
 
   static void init();
-  static void start();
+  void start();
   void pause();
   void resume();
+  void updateScore();
+
+  void drawBoard(sf::RenderWindow*);
   // ~Game();
 };
 

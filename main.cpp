@@ -2,7 +2,8 @@
 
 int main() {
   Game::init();
-  Game::start();
+  Game game;
+  game.start();
 
   return 0;
 }
